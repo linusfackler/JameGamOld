@@ -10,8 +10,9 @@ public class PlayerMovement : MonoBehaviour
     public Vector2 startPos;
 
     private float horizontal;
-    public float speed = 5;
+    public float speed = 3;
     public bool isFacingRight = true;
+    public float jumpingPower = 3;
 
     void Start()
     {
@@ -37,7 +38,18 @@ public class PlayerMovement : MonoBehaviour
         horizontal = context.ReadValue<Vector2>().x;
     }
 
-        private void Flip()
+    public void Jump(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            if (rb.velocity.y == 0f)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            }
+        }
+    }
+
+    private void Flip()
     {
         isFacingRight = !isFacingRight;
         transform.Rotate(0f, 180f, 0f);
